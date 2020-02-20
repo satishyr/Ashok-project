@@ -1,0 +1,14 @@
+server:
+  port: 4444
+spring:
+  application:
+    name: API-GATEWAY
+zuul:
+  prefix: /api
+  routes:
+    welcome:
+      path: /welcome/**
+      serviceId: WELCOME-SERVICE
+    greet:
+      path: /greet/**
+      serviceId: GREET-SERVICE

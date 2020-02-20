@@ -1,0 +1,28 @@
+import static org.junit.Assert.assertNotNull;
+
+
+import org.junit.Test;
+
+import com.app.UserDao;
+
+
+
+public class UserDaoTest {
+	
+	@Test
+	public void TestFindUnameById() {
+	
+		UserDao dao=new UserDao();
+		String name=dao.getUserById(101);
+		assertNotNull(name);
+	}
+	@Test
+	public void TestFindEmailById() {
+		
+		UserDao dao=new UserDao();
+		String email=dao.getUserEmailById(101);
+		assertNotNull(email);
+	}
+	
+	
+	}

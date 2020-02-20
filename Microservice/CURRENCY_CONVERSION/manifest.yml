@@ -1,0 +1,10 @@
+applications:
+- name: currency-conversion-api
+  disk_quota: 1G
+  instances: 1
+  memory: 1G
+  path: target/currency-conversion-api.jar
+  buildpack: https://github.com/cloudfoundry/java-buildpack.git
+  routes:
+  - route: tekleads-cc-api.cfapps.io
+  stack: cflinuxfs3

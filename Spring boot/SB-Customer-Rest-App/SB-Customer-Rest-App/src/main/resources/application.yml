@@ -1,0 +1,22 @@
+spring:
+  profiles:
+    active: qa
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    shutdown:
+      enabled: true
+logging:
+  file:
+    name: D:\\Training\\SpringBoot-MicroServices\\logs\\SB-Customer-App.log
+  level:
+    org:
+      springframework: ERROR
+    com:
+      nit:
+        service: INFO
+  pattern:
+    console: null

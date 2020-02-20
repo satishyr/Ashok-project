@@ -1,0 +1,675 @@
+MicroServices
+-------------
+Monolithic Architecture
+Challenges of Monolithic
+Load Balancer (Cluster)
+Microservices Introduction
+MicroServices Advantages
+Microservices challenges
+MicroServices Architecture
+MicroServices Development (Eureka &  zuul)
+Introduction to cloud(PCF, AWS and Azure)
+MicroServices Deployment using PCF
+AutoScaling
+Interservice Communication (FeignClient)
+Docker
+Security
+Ribbon
+Hystrix
+Kafka
+
+Use Case
+--------
+Develop a webapplication to perform Currency Conversion based Currency Exchange Cost
+
+Ex: Dollar to Rupee  | Euro to Rupee  vice versa
+
+This application should support for both C 2 B and B 2 B operations.
+
+
+Components
+----------
+UI (presentation)-- TheamLeaf
+Controller (To handle C 2 B request)
+RestController (To handle B 2 B request)
+Service (To execute core Business Logic)
+Repository (To execute Persistent Logic)
+In Memory DB (To store Currency Exchange Cost)
+
+Application Deployment
+---------------------
+If application is deployed to single server we have both advantages and dis-advantages.
+
+Advantages
+----------
+-> Infra Cost is less
+-> No need to recruite multiple people to mange deployment process
+
+Dis-Advantages
+--------------
+-> If requests are more, response time is going to increase
+
+-> There is a chance server may crash
+
+-> If server is crashed, application will be then revenue will be impacted.
+
+-> We can't go for prod deployment without bringing down the application.
+
+-> Prodiving Project Details to new team member is difficult
+
+
+Load Balancer
+-------------
+Instead of deploying our application to single server, we will deploy our application to mutliple servers using Load Balancer.
+
+Load Balancer is used to distribute client requests to all the nodes which are connected to cluster.
+
+Advantages
+----------
+-> Burden on server will be reduced bcz multiple servers will process
+-> Response time will be decreased
+-> Less Chances for server crash
+-> We can scale our application for all scenarios (Big Day sales)
+-> We can do production deployments without application down time.
+
+Dis-Advantages
+--------------
+-> Cluster is a costly solution
+-> Lot of money we shud spend to create Infrastructure
+-> We need team of admins to setup, maintain and monitor Cluster
+-> Resource cost will be high
+
+To resolve problems of Monolithic We are going to use MicroServices
+
+
+
+Micro Services
+--------------
+-> Micro Service is not a Framework
+-> Micro Service is not a Technology
+-> Micro Service is not an API
+
+-> MicroService is an architectural Design Pattern.
+
+-> The main aim of MicroService is to resolve the problems of       Monolithic Architecture.
+
+-> MicroService is not specific to any programming language. It is an universal Design Pattern to develop applications.
+
+
+MicroServices Advantages
+------------------------
+1) New Technologies
+2) Parallel Development
+3) Fast Releases
+4) Dynamic Scaling ( Horizontal Scaling & Vertical Scaling )
+5) Explaing Project to new Team members is easy (Single Business Unit)
+
+
+MicroServices Dis-Advantages
+----------------------------
+1) Bounded Context (Designing)
+2) Lot of Configuration
+3) Visibility
+4) Pack of cards problem
+
+
+
+
+MicroServices Architecture
+--------------------------
+MicroServices architecture will talk about how many components will involved and how those components will be connected.
+
+Note: All projects may not follow same architecture. MicroServices architecture will change from project to project.
+
+
+Currency-Exchange-Service
+--------------------------
+This MicroService is responsible to provide Currency Exchange Cost.
+
+Who ever want to do Currency Conversion they should get currency exchagne cost using this micro service.
+
+Note: In this Currency Exchange Service, current exchange cost will be available in in-memory database.
+
+Components
+----------
+CurrencyExchangeRestController.java
+CurrencyExchangeService.java
+CurrencyExchangeCostBean.java
+CurrencyExchangeEntity.java
+CurrencyExchangeRepository.java
+
+schema.sql
+data.sql
+
+Currency-Conversion-Api
+-----------------------
+This api is responsible to perform Currency Conversion according to given values.
+
+From : 
+
+To : 
+
+Quantity : 
+
+To perform Currency Conversion it needs Currency Exchange Cost.
+
+Currency Exchange Cost will be provided by Currency-Exchange service
+
+Note: 
+-----
+Currency-conversion-api will communicate with currency-exchange api
+
+Components
+----------
+CurrencyConversionRestController.java
+CurrencyConversionService.java
+CurrencyExchangeCostBean.java--- CE reponse bean
+CurrencyBean.java -- CC response bean
+
+
+http://localhost:2222/convert/from/USD/to/INR/quantity/300
+
+
+
+
+
+
+
+
+
+
+Cloud Platform
+--------------
+AWS (Amazon Webservices) -- Free Trial (5 GB)
+
+PCF (Pivotal Cloud Foundry) -- $87
+
+Microsoft Azure--
+
+
+
+PCF CLI Commands
+----------------
+cf login
+
+cf target
+
+cf push ---> It requires appname
+
+cf push app-name  --> Unable to recognize build pack
+
+Ex : cf push SBRestApi -p target/jarfilename.jar
+
+
+
+
+
+
+Our API URL : https://sbrestapi.cfapps.io/
+
+
+
+https://tekleads-rest-api.cfapps.io/
+
+
+https://sbrestapi.cfapps.io/welcome/Smith
+
+
+
+
+
+
+
+cf map-route sbrestapi cfapps.io --hostname tekleads-rest-api
+
+
+https://sbrestapi.cfapps.io/welcome/Ashok
+https://tekleads-rest-api.cfapps.io/welcome/Ashok
+
+
+cf login
+cf target
+cf push  app-name  -p  abosolute-path-of-jar-file
+cf apps
+cf routes
+cf -map-route
+cf stop app-name
+cf start app-name
+cf delete app-name
+
+
+build pack
+Scaling
+
+
+
+cf login
+cf target
+cf apps
+cf routes
+cf push APP_NAME -p JAR_FILE
+cf stop APP_NAME
+cf start APP_NAME
+cf restart APP_NAME
+cf map-route APP_NAME  DOMAIN_NAME  -hostname tekleads-api
+cf delete APP_NAME
+
+cf logs APP_NAME
+
+cf push  ---> it will search for manifest.yml
+
+
+
+
+
+
+
+https://tekleads-ce-api.cfapps.io/
+/getCurrencyExchangeCost/from/USD/to/INR
+
+
+
+http://tekleads-cc-api.cfapps.io/convert/from/USD/to/INR/quantity/10
+
+IP : http://tekleads-cc-api.cfapps.io/
+Path : convert/from/{form}/to/{form}/quantity/{quantity}
+Request Type : GET
+---------------------------------------------------------
+Response Type
+--------------------------------------
+{
+
+"currencyFrom":"USD",
+"currencyTo":"INR",
+"totalCurrencyAmt":750.0
+
+}
+
+
+Currency Converion UI Application
+---------------------------------
+This web application is used to provide Currency Conversion Functionality for end users.
+
+Note: This UI application will do currency conversion with the help of CC and CE microservices which are running in PCF.
+
+
+Components
+----------
+Create Web application using SpringBoot
+Controller class (To display Form and To Handle Form submission)
+Form Binding Class( To bind form data to java object)
+Service class (To handle business logic - Restcall)
+Response Bean Class (To store CC api response data)
+View File (jsp - to display form)
+
+
+CC_REST_ENDPONT =
+"http://tekleads-cc-api.cfapps.io/convert/from/{from}/to/{to}/quantity/{quantity}";
+
+-------------------------------------------------------------------
+Builder builder = Webclient.builder();
+WebClient webClient = builder.build( );
+
+CurrencyResponseBean responseBean = 
+	  webClient.get( )
+	 .uri(CC_REST_ENDPOINT,1,2,3)
+	 .retrieve( )
+	 .bodyToMono(CurrencyResponseBean.class)
+	 .block( );
+
+
+
+
+
+Spring MVC Flow
+---------------
+DispatcherServlet : FrontController
+HandlerMapper : mapping between request and request-handler
+Controller : Request-Handler (@Controller)
+ModelAndView : Model represents data, view represnets UI page
+ViewResolver : To locate view files, to understand view technology
+View : To render Model Data on View File
+
+
+Service Registry For MicroServices
+----------------------------------
+Service Registry is used to maintain project related microservices details.
+
+We can use Netflix-Eureka Server as a Service Registry.
+
+Working with Service Registry
+------------------------------
+1) Create SpringBoot Web application
+
+2) Add Eureka-Server dependency in pom.xml file
+
+3) Use @EnableEurekaServer at SpringBoot start class
+
+4) ServiceRegistry project should not register with Eureka
+
+	eureka.client.register-with-eureka=false
+
+5) After Running this application, eureka dashboard using below url
+		
+		localhost:<port-num>
+
+
+
+Creating MicroService which acts as Eureka Client
+--------------------------------------------------
+1) Create SpringBoot Web application
+
+2) Add Eureka-Client dependency in pom.xml file
+
+3) Use @EnableDiscoveryClient at SpringBoot main class
+
+4) Create Required RestControllers, Services etc...
+
+5) Change port number in application.yml file
+
+6) Add Application Name application.yml file (It is vvvvimp)
+
+7) Run application, then check Eureka Dashboard
+
+
+Note: If Eureka Service Registry Project running in diff machine, then we should add below property in client application yml file.
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://IP:PORT-NUM/eureka
+
+
+
+Creating API Gateway
+--------------------
+1) Create SpringBoot Web application
+
+2) Add Eureka Client Dependency in pom.xml
+
+3) Add Zuul dependency in pom.xml
+
+4) Use @EnableDiscoveryClient at SpringBoot start class
+
+5) Change port number and configure Application name in yml file
+
+6) Configure zuul routings in application.yml file
+
+7) Run this application and check Eureka dashboard.
+
+
+
+
+
+API-1 URL :  http://IP:PORT/welcome/getWelcomeMsg
+
+API-2 URL :  http://IP:PORT/greet/getGreetMsg
+
+
+/welcome/** -----> WELCOME-SERVICE
+
+
+/greet/** -----> GREET-SERVICE
+
+
+01-Eureka : http://IP:8761/
+
+02-Welcome-Service : http://192.168.100.164:2222/
+
+03-Greet-Service : http://192.168.100.164:3333/
+
+04-API-Gateway : http://192.168.100.164:4444/
+
+-----------------------------------------------------
+http://192.168.100.164:4444/api/welcome/getWelcomeMsg/Ashok
+
+http://192.168.100.164:4444/api/greet/getGreetMsg/Ashok
+
+
+
+
+
+Service registry
+
+How to register client application with Eureka Server
+
+
+Port : 8761
+
+@EnableFeignClients
+---------------------------------------------
+@FeignClient(name="GREET-SERVICE")
+public interface GreetApiClientProxy{
+
+    @RequestMapping("/getGreetMsg/{name}")
+    public String invokeGreetApi(@PathVariable("name") String name);
+
+}
+----------------------------------------------
+
+
+https://github.com/TEK-Leads/SB-MS-Workspace
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Singleton
+Factory
+Builder
+Proxy
+Observer & Observable
+Dao
+MVC
+FrontController
+Strategy
+Cache
+MicroService (Single Responsibility)
+
+
+
+
+
+
+CircuitBreaker (Hystrix)
+Ribbon
+Admin UI
+------------------------
+Class Loaders
+Docker
+Apache Kafka
+Payment Gateway
+SonarQube
+Security
+Technical FLow of modules
+UML Diagrams
+SOLID OOPS
+Hikari
+PM Round Questions
+Daily Activities in Ofc
+
+
+
+11-Dec-2019
+-----------
+1) Microservice down 
+
+2) MicroService performance is slow (JMETER)-- NewRelic
+
+3) Exception Occured In MicroService due to ThirdParty api is down
+	(Circuit Breaker)-- Hystrix
+
+
+
+Working with CircuitBreaker in MS
+---------------------------------
+1) Create SpringBoot web application
+
+2) Add Hystrix and Hystrix Dashboard dependencies in pom.xml file
+
+3) Configure @EnableCircuitBreaker annotation at start class
+
+4) For which method we should apply fallback mechanism, at that method use @HystrixCommand annotation
+
+	@HystrixCommand(fallBackMethod="method-name")
+
+5) Add Springboot-starter-actuator dependency in pom.xml file
+
+6) Configure hystrix.stream endpoint in application.yml file
+
+7) Configure @EnableHystrixDashboard annotation at start class
+
+8) After deploying the application we can access Hystrix dashboard using below url
+
+	http://localhost:5555/hystrix
+
+9) In hystrix dashboard pass stream url to monitor traffic
+
+	http://localhost:5555/actuator/hystrix.stream
+
+Load balancing
+--------------
+The process of distributing load to multiple servers
+
+Load Balancing is used to reduce burden on server
+
+
+Load Balancing we can do in 2 ways
+-----------------------------------
+1) Server Side Load Balancing
+
+
+Load Balancing Algorithms 
+-------------------------
+1) Round Robbin
+
+2) IP Hashing
+
+3) Sticky Session etc...
+
+
+
+
+
+2) Client Side Load Balancing
+
+
+
+
+
+
+
+pom : ribbon-client
+
+@EnableRibbonClients
+
+
+@FeignClient(name="CURRENCY-EXCHANGE-SERVICE)
+@RibbonClient(name="CURRENCY-EXCHANGE-SERVICE)
+public interface CECLient{
+
+}
+
+
+CE Response
+-----------
+from : USD
+to  : INR
+cost " 75.0
+port : 1111
+
+
+String port = environment.getProperty("local.server.port");
+
+
+
+
+-Dserver.port=8888
+
+
+
+
+
+
+
+
+
+http://localhost:8888/getData
+
+http://localhost:9999/getData
+
+
+http://localhost:8888/convert/from/USD/to/INR/quantity/200
+
+
+http://localhost:8888/convert/from/USD/to/INR/quantity/100
+
+http://localhost:8888/convert/from/USD/to/INR/quantity/50
+
+http://localhost:8888/convert/from/USD/to/INR/quantity/20
+
+
+
+
+
+Spring Boot Admin
+-----------------
+
+
+
+
+Actuators
+----------
+To provide production ready features of our application we are using Actuators.
+
+Actuator Endpoints
+------------------
+health
+info
+beans
+mappings
+threadump
+heapdump
+httptrace
+shutdown (POST)  etc.......
+
+
+SpringBoot Admin
+----------------
+Springboot admin provides, one comman place to maintain and monitor all spring boot based applications.
+
+
+Creating Spring Boot Admin Server Project
+------------------------------------------
+1) Add spring-boot-admin-server-starter dependency in pom.xml file
+
+2) Specifiy @EnableAdminServer annotation at SpringBoot start class
+
+
+Creating Boot Admin Client Project
+----------------------------------
+1) Add below dependencies in pom.xml file	
+		a) spring-boot-admin-client-starter
+		b) spring-boot-starter-actuator
+
+2) Configure below details in application.properties or yml file	
+		a) Configure port number
+		b) Configure application name
+		c) Register Client with Admin using URL
+		d) Expose required actuator endpoints
+
+
+
+
+https://github.com/TEK-Leads/SB-MS-Workspace
+
+(MicroServices-Workspace.rar)

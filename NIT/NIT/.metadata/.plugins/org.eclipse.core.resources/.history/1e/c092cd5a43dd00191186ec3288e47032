@@ -1,0 +1,18 @@
+package com.app;
+
+public class DateUtils implements Cloneable {
+	
+	private DateUtils instanse=null;
+	private DateUtils() {
+		
+	}
+
+	protected Object clone() throws CloneNotSupportedException{
+		if (instanse==null) {
+			instanse=new DateUtils();
+		}
+		
+		return instanse;
+		
+	}
+}

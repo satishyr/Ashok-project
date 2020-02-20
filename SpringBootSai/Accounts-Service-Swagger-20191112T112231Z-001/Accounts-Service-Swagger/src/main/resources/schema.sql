@@ -1,0 +1,1 @@
+create table accounts(accountid INTEGER(20),name VARCHAR(30),type VARCHAR(30),primary key(accountid));

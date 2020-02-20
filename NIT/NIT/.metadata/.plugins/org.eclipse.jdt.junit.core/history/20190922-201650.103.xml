@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="JUnitEx" project="JUnitEx" tests="5" started="5" failures="0" errors="0" ignored="0">
+  <testsuite name="DateUtilsTest" time="0.0">
+    <testcase name="TestGetInstance" classname="DateUtilsTest" time="0.0"/>
+  </testsuite>
+  <testsuite name="WelcomeTest" time="0.0">
+    <testcase name="TestGetWelcomeMsg" classname="WelcomeTest" time="0.0"/>
+  </testsuite>
+  <testsuite name="UserDaoTest" time="0.02">
+    <testcase name="TestFindUnameById" classname="UserDaoTest" time="0.015"/>
+    <testcase name="TestFindEmailById1" classname="UserDaoTest" time="0.005"/>
+    <testcase name="TestFindEmailById2" classname="UserDaoTest" time="0.0"/>
+  </testsuite>
+</testrun>

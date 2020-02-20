@@ -1,0 +1,10 @@
+applications:
+- name: currency-conversion-web
+  disk_quota: 1G
+  instances: 1
+  memory: 1G
+  path: target/Currency-Conversion-Web-App.war
+  buildpack: https://github.com/cloudfoundry/java-buildpack.git
+  routes:
+  - route: tekleads-web-app.cfapps.io
+  stack: cflinuxfs3

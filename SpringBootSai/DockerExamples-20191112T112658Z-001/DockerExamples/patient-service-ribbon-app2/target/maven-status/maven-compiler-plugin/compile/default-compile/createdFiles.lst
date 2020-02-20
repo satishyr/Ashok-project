@@ -1,0 +1,5 @@
+com\sai\entities\Doctor.class
+com\sai\services\PatientService.class
+com\sai\resources\PatientResource.class
+com\sai\clients\DoctorClient.class
+com\sai\PatientServiceRibbonApp2Application.class

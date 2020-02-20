@@ -1,0 +1,27 @@
+spring:
+  application:
+    name: MovieService
+  jpa:
+    hibernate:
+      ddl-auto: none
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/nit
+    username: sai
+    password: sai
+    
+
+
+eureka: 
+  client: 
+    serviceUrl: 
+       defaultZone: ${EUREKA_URI:http://localhost:9090/eureka/}
+  instance: 
+    prefer-ip-address: true
+    home-page-url: http://localhost:9090/
+      
+server:
+  port: 8989
+  

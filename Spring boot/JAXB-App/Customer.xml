@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<customer type="old">
+	<id>101</id>
+	<name>John</name>
+	<email>john@gmail.com</email>
+</customer>

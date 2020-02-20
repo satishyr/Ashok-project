@@ -1,0 +1,14 @@
+spring:
+  datasource:
+    username: UHIP_DEV
+    password: UHIP_DEV
+    url: jdbc:oracle:thin:@localhost:1521/XE
+    driver-class-name: oracle.jdbc.driver.OracleDriver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+        dialect: org.hibernate.dialect.OracleDialect

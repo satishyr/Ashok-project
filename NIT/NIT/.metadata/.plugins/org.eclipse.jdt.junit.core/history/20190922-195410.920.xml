@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="JUnitEx" project="JUnitEx" tests="1" started="1" failures="0" errors="0" ignored="0">
+  <testsuite name="WelcomeTest" time="0.119">
+    <testcase name="TestGetWelcomeMsg" classname="WelcomeTest" time="0.119"/>
+  </testsuite>
+</testrun>

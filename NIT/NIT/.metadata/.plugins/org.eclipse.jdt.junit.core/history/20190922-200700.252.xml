@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="UserDaoTest" project="JUnitEx" tests="2" started="2" failures="0" errors="0" ignored="0">
+  <testsuite name="UserDaoTest" time="0.0">
+    <testcase name="TestFindUnameById" classname="UserDaoTest" time="0.0"/>
+    <testcase name="TestFindEmailById" classname="UserDaoTest" time="0.0"/>
+  </testsuite>
+</testrun>
